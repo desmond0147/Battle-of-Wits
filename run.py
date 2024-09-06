@@ -14,7 +14,7 @@ class Board:
         self.board = [['~' for _ in range(size)] for _ in range(size)]
         self.ships = set()
 
-         def place_ships(self):
+    def place_ships(self):
         """
         Randomly place ships on the board.
         """
