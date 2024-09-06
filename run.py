@@ -34,3 +34,20 @@ class Board:
                 ' ' if hide_ships and self.board[row][col] == 'S' else self.board[row][col]
                 for col in range(self.size)
             ))
+
+    # Initialize scores
+scores = {"computer": 0, "player": 0}
+
+def get_valid_guess(prompt):
+    """
+    Prompt the user for a guess and validate it.
+    """
+    while True:
+        try:
+            guess = input(prompt)
+            guess = int(guess)
+            if guess not in range(5):
+                raise ValueError("Input out of range. Please enter numbers between 0 and 4.")
+            return guess
+        except ValueError as e:
+            print(f"Invalid input: {e}. Try again.")
