@@ -71,3 +71,29 @@ def main_game():
         
         player_board.print_board()
         computer_board.print_board(hide_ships=True)  # Hide computer's ships
+
+        # Player's guess
+        guess_row = get_valid_guess("Enter a row to guess (0-4): ")
+        guess_col = get_valid_guess("Enter a column to guess (0-4): ")
+
+        if computer_board.make_guess(guess_row, guess_col):
+            print("You hit a ship!")
+            scores["player"] += 1
+        else:
+            print("You missed.")
+
+        # Computer's guess
+        comp_guess_row, comp_guess_col = randint(0, 4), randint(0, 4)
+        print(
+            f"Computer guesses row {comp_guess_row}, column {comp_guess_col}"
+        )
+
+        if player_board.make_guess(comp_guess_row, comp_guess_col):
+            print(
+                f"Computer hit a ship at ({comp_guess_row}, {comp_guess_col})!"
+            )
+            scores["computer"] += 1
+        else:
+            print(
+                f"Computer missed at ({comp_guess_row}, {comp_guess_col})."
+            )
