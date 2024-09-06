@@ -51,3 +51,23 @@ def get_valid_guess(prompt):
             return guess
         except ValueError as e:
             print(f"Invalid input: {e}. Try again.")
+
+def main_game():
+    """
+    Main game function. Handles the setup of the game, player interactions, 
+    and keeps track of scores. The game runs for a specified number of rounds.
+    """
+    print("Welcome to ULTIMATE BATTLESHIPS!!")
+    
+    player_name = input("Please enter your name: ")
+    player_board = Board(size=5, num_ships=4, player_name=player_name)
+    computer_board = Board(size=5, num_ships=4, player_name="Computer", is_computer=True)
+    
+    player_board.place_ships()
+    computer_board.place_ships()
+    
+    for round_num in range(6):
+        print(f"\n--- Round {round_num + 1} ---")
+        
+        player_board.print_board()
+        computer_board.print_board(hide_ships=True)  # Hide computer's ships
