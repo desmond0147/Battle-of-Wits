@@ -1,6 +1,5 @@
 from random import randint
 
-
 class Board:
     """
     Main board class. Sets the size, the number of ships, the player's name,
@@ -32,7 +31,7 @@ class Board:
         print(f"{self.player_name}'s Board:")
         for row in range(self.size):
             print(' '.join(
-                ' ' if hide_ships and self.board[row][col] == 'S'
+                '~' if hide_ships and self.board[row][col] == 'S'
                 else self.board[row][col]
                 for col in range(self.size)
             ))
@@ -59,7 +58,11 @@ def get_valid_guess(prompt):
     """
     while True:
         try:
-            guess = input(prompt)
+            guess = input(prompt).strip()
+            if len(guess) != 1 or not guess.isdigit():
+                raise ValueError(
+                    "Please enter a single digit between 0 and 4."
+                )
             guess = int(guess)
             if guess not in range(5):
                 raise ValueError(
@@ -70,6 +73,17 @@ def get_valid_guess(prompt):
             print(f"Invalid input: {e}. Try again.")
 
 
+def get_valid_name():
+    """
+    Prompt the user for a name and validate it.
+    """
+    while True:
+        player_name = input("Please enter your name: ").strip()
+        if len(player_name) > 1 and player_name.isalpha():
+            return player_name
+        print("Invalid name. Please enter a valid name with more than one character.")
+
+
 def main_game():
     """
     Main game function. Handles the setup of the game, player interactions,
@@ -77,7 +91,8 @@ def main_game():
     """
     print("Welcome to ULTIMATE BATTLESHIPS!!")
 
-    player_name = input("Please enter your name: ")
+    player_name = get_valid_name()
+
     player_board = Board(size=5, num_ships=4, player_name=player_name)
     computer_board = Board(
         size=5, num_ships=4, player_name="Computer", is_computer=True
