@@ -1,5 +1,6 @@
 from random import randint
 
+
 class Board:
     def __init__(self, size, num_ships, player_name, is_computer=False):
         self.size = size
@@ -29,7 +30,9 @@ class Board:
 
     def make_guess(self, row, col):
         if (row, col) in self.guesses:
-            raise ValueError("You've already guessed that. Try a different number.")
+            raise ValueError(
+                "You've already guessed that. Try a different number."
+            )
         self.guesses.add((row, col))
         if (row, col) in self.ships:
             self.board[row][col] = 'H'
@@ -38,36 +41,50 @@ class Board:
             self.board[row][col] = 'O'
             return False
 
+
 # Initialize scores
 scores = {"computer": 0, "player": 0}
+
 
 def get_valid_guess(prompt, board):
     while True:
         try:
             guess = input(prompt).strip()
             if len(guess) != 1 or not guess.isdigit():
-                raise ValueError("Please enter a single digit between 0 and 4.")
+                raise ValueError(
+                    "Please enter a single digit between 0 and 4."
+                )
             guess = int(guess)
             if guess not in range(5):
-                raise ValueError("Input out of range. Please enter numbers between 0 and 4.")
+                raise ValueError(
+                    "Input out of range. Enter numbers between 0 and 4."
+                )
             if guess in board.guesses:
-                raise ValueError("You've already guessed that. Try a different number.")
+                raise ValueError(
+                    "You've already guessed that. Try a different number."
+                )
             return guess
         except ValueError as e:
             print(f"Invalid input: {e}. Try again.")
+
 
 def get_valid_name():
     while True:
         player_name = input("Please enter your name: ").strip()
         if len(player_name) > 1 and player_name.isalpha():
             return player_name
-        print("Invalid name. Please enter a valid name with more than one character.")
+        print(
+            "Invalid name. Enter a valid name with more than one character."
+        )
+
 
 def main_game():
     print("Welcome to ULTIMATE BATTLESHIPS!!")
     player_name = get_valid_name()
     player_board = Board(size=5, num_ships=3, player_name=player_name)
-    computer_board = Board(size=5, num_ships=3, player_name="Computer", is_computer=True)
+    computer_board = Board(
+        size=5, num_ships=3, player_name="Computer", is_computer=True
+    )
     player_board.place_ships()
     computer_board.place_ships()
 
@@ -77,8 +94,12 @@ def main_game():
         computer_board.print_board(hide_ships=True)
 
         # Player's guess
-        guess_row = get_valid_guess("Enter a row to guess (0-4): ", player_board)
-        guess_col = get_valid_guess("Enter a column to guess (0-4): ", player_board)
+        guess_row = get_valid_guess(
+            "Enter a row to guess (0-4): ", player_board
+        )
+        guess_col = get_valid_guess(
+            "Enter a column to guess (0-4): ", player_board
+        )
 
         try:
             if computer_board.make_guess(guess_row, guess_col):
@@ -92,11 +113,20 @@ def main_game():
         # Computer's guess
         while True:
             try:
-                comp_guess_row, comp_guess_col = randint(0, 4), randint(0, 4)
-                if not player_board.make_guess(comp_guess_row, comp_guess_col):
-                    print(f"Computer missed at ({comp_guess_row}, {comp_guess_col}).")
+                comp_guess_row = randint(0, 4)
+                comp_guess_col = randint(0, 4)
+                if not player_board.make_guess(
+                    comp_guess_row, comp_guess_col
+                ):
+                    print(
+                        "Computer missed at "
+                        f"({comp_guess_row}, {comp_guess_col})."
+                    )
                 else:
-                    print(f"Computer hit a ship at ({comp_guess_row}, {comp_guess_col})!")
+                    print(
+                        "Computer hit a ship at "
+                        f"({comp_guess_row}, {comp_guess_col})!"
+                    )
                     scores["computer"] += 1
                 break
             except ValueError:
@@ -115,6 +145,7 @@ def main_game():
         print("It's a tie!")
 
     print("\nGame Over! Thanks for playing.")
+
 
 if __name__ == "__main__":
     main_game()
