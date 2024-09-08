@@ -42,10 +42,6 @@ class Board:
             return False
 
 
-# Initialize scores
-scores = {"computer": 0, "player": 0}
-
-
 def get_valid_guess(prompt, board):
     while True:
         try:
@@ -78,8 +74,22 @@ def get_valid_name():
         )
 
 
+def display_instructions():
+    print("\nWelcome to ULTIMATE BATTLESHIPS!!")
+    print("How to Play:")
+    print("1. The game is played on a 5x5 grid.")
+    print("2. You and the computer will each have 3 ships hidden on the grid.")
+    print("3. Each round, you will guess a row and a column to try and hit the computer's ships.")
+    print("4. The computer will also guess to try and hit your ships.")
+    print("5. The game lasts for 6 rounds. The player with the most hits wins!")
+    print("6. A 'H' marks a hit, 'O' marks a miss, and 'S' shows your ships on your board.")
+    print("7. When prompted, enter your name and follow the instructions to make your guesses.")
+    print("Good luck!\n")
+
+
 def main_game():
-    print("Welcome to ULTIMATE BATTLESHIPS!!")
+    display_instructions()
+
     player_name = get_valid_name()
     player_board = Board(size=5, num_ships=3, player_name=player_name)
     computer_board = Board(
@@ -88,7 +98,10 @@ def main_game():
     player_board.place_ships()
     computer_board.place_ships()
 
-    for round_num in range(4):  # Shortened the game to 4 rounds
+    # Initialize scores
+    scores = {"computer": 0, "player": 0}
+
+    for round_num in range(6):  # Adjusted to 6 rounds
         print(f"\n--- Round {round_num + 1} ---")
         player_board.print_board()
         computer_board.print_board(hide_ships=True)
@@ -145,6 +158,19 @@ def main_game():
         print("It's a tie!")
 
     print("\nGame Over! Thanks for playing.")
+    play_again()
+
+
+def play_again():
+    while True:
+        choice = input("Would you like to play again? (yes/no): ").strip().lower()
+        if choice == 'yes':
+            main_game()
+        elif choice == 'no':
+            print("Thanks for playing! Goodbye!")
+            break
+        else:
+            print("Invalid input. Please enter 'yes' or 'no'.")
 
 
 if __name__ == "__main__":
