@@ -70,7 +70,7 @@ def get_valid_guess(prompt, board):
 
 def get_valid_name():
     while True:
-        player_name = input("Please enter your name: ").strip()
+        player_name = input("Please enter your name:\n ").strip()
         if len(player_name) > 1 and player_name.isalpha():
             return player_name
         print(
