@@ -1,4 +1,12 @@
 from random import randint
+import os
+
+
+def clearConsole():
+    """
+    Clears the console output.
+    """
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 class Board:
@@ -66,12 +74,10 @@ def get_valid_guess(prompt, board):
 
 def get_valid_name():
     while True:
-        player_name = input("Please enter your name:\n ").strip()
+        player_name = input("Please enter your name:\n").strip()
         if len(player_name) > 1 and player_name.isalpha():
             return player_name
-        print(
-            "Invalid name. Enter a valid name with more than one character."
-        )
+        print("Invalid name. Enter a valid name with more than one character.")
 
 
 def display_instructions():
@@ -79,18 +85,28 @@ def display_instructions():
     print("How to Play:")
     print("1. The game is played on a 5x5 grid.")
     print("2. You and the computer will each have 3 ships hidden on the grid.")
-    print("3. Each round, you will guess a row and a column to try and hit the computer's ships.")
-    print("4. The computer will also guess to try and hit your ships.")
-    print("5. The game lasts for 6 rounds. The player with the most hits wins!")
-    print("6. A 'H' marks a hit, 'O' marks a miss, and 'S' shows your ships on your board.")
-    print("7. When prompted, enter your name and follow the instructions to make your guesses.")
+    print("3. Each round, you will guess a row and a column to try and hit "
+          "the computer's ships.")
+    print("4. The computer will also guess to try and hit your ships."
+          )
+    print("5. The game lasts for 6 rounds. The player with the most hits wins!"
+          )
+    print("6. A 'H' marks a hit, 'O' marks a miss, and 'S' shows your ships "
+          "on your board.")
+    print("7. When prompted, enter your name and follow the instructions to "
+          "make your guesses.")
     print("Good luck!\n")
 
 
 def main_game():
+    """
+    Begins the main game, prompts the player and computer to take turns 
+    making guesses, and then prints the results at the end of the game.
+    """
     display_instructions()
-
     player_name = get_valid_name()
+    clearConsole()
+
     player_board = Board(size=5, num_ships=3, player_name=player_name)
     computer_board = Board(
         size=5, num_ships=3, player_name="Computer", is_computer=True
@@ -108,13 +124,16 @@ def main_game():
 
         # Player's guess
         guess_row = get_valid_guess(
-            "Enter a row to guess (0-4): ", player_board
+            "Enter a row to guess (enter a single digit between 0 and 4): ",
+            player_board
         )
         guess_col = get_valid_guess(
-            "Enter a column to guess (0-4): ", player_board
+            "Enter a column to guess (enter a single digit between 0 and 4): ",
+            player_board
         )
 
         try:
+            clearConsole()
             if computer_board.make_guess(guess_row, guess_col):
                 print("You hit a ship!")
                 scores["player"] += 1
@@ -128,22 +147,15 @@ def main_game():
             try:
                 comp_guess_row = randint(0, 4)
                 comp_guess_col = randint(0, 4)
-                if not player_board.make_guess(
-                    comp_guess_row, comp_guess_col
-                ):
-                    print(
-                        "Computer missed at "
-                        f"({comp_guess_row}, {comp_guess_col})."
-                    )
+                if not player_board.make_guess(comp_guess_row, comp_guess_col):
+                    print(f"Computer missed at ({comp_guess_row}, "
+                          f"{comp_guess_col}).")
                 else:
-                    print(
-                        "Computer hit a ship at "
-                        f"({comp_guess_row}, {comp_guess_col})!"
-                    )
+                    print(f"Computer hit a ship at ({comp_guess_row}, "
+                          f"{comp_guess_col})!")
                     scores["computer"] += 1
                 break
             except ValueError:
-                # The computer guessed a previously guessed spot; try again
                 continue
 
     print("\nFinal Scores:")
@@ -163,9 +175,11 @@ def main_game():
 
 def play_again():
     while True:
-        choice = input("Would you like to play again? (yes/no): ").strip().lower()
+        choice = input("Would you like to play again? (yes/no):\n").strip().lower()
         if choice == 'yes':
+            clearConsole()
             main_game()
+            break
         elif choice == 'no':
             print("Thanks for playing! Goodbye!")
             break
