@@ -100,8 +100,8 @@ def display_instructions():
 
 def main_game():
     """
-    Begins the main game, prompts the player and computer to take turns 
-    making guesses, and then prints the results at the end of the game.
+    Begins the main game, prompts the player and computer to take
+    turns, making guesses, and then prints the result at the end of game.
     """
     display_instructions()
     player_name = get_valid_name()
@@ -147,10 +147,18 @@ def main_game():
             try:
                 comp_guess_row = randint(0, 4)
                 comp_guess_col = randint(0, 4)
-                if not player_board.make_guess(comp_guess_row, comp_guess_col):
-                    print(f"Computer missed at ({comp_guess_row}, {comp_guess_col}).")
+                if not player_board.make_guess(
+                    comp_guess_row, comp_guess_col
+                ):
+                    print(
+                        f"Computer missed at ({comp_guess_row}, "
+                        f"{comp_guess_col})."
+                    )
                 else:
-                    print(f"Computer hit a ship at ({comp_guess_row}, {comp_guess_col})!")
+                    print(
+                        f"Computer hit a ship at ({comp_guess_row}, "
+                        f"{comp_guess_col})!"
+                    )
                     scores["computer"] += 1
                 break
             except ValueError:
@@ -173,7 +181,9 @@ def main_game():
 
 def play_again():
     while True:
-        choice = input("Would you like to play again? (yes/no):\n").strip().lower()
+        choice = input(
+            "Would you like to play again? (yes/no):\n"
+        ).strip().lower()
         if choice == 'yes':
             clearConsole()
             main_game()
@@ -187,3 +197,4 @@ def play_again():
 
 if __name__ == "__main__":
     main_game()
+
