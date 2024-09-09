@@ -47,6 +47,14 @@ In Ultimate Battleships, both you and the computer take turns guessing the locat
 
 ![Screenshot of game after entering user name](./images/screenshot_after_username.png)
 
+### Gameplay Interaction
+
+In **ULTIMATE BATTLESHIPS**, the player and the computer take turns guessing the locations of each other's battleships. The game provides feedback after each guess, indicating whether it was a hit or a miss. 
+
+The screenshot below shows a typical turn, where both the player and the computer make their guesses and receive instant feedback on their success.
+
+![Gameplay Screenshot](./images/game-interaction.png)
+
 
 
 
