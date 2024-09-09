@@ -36,7 +36,7 @@
 
 The game automatically generates a 5x5 grid board with battleships randomly placed. Each battleship occupies a single square on the grid, and the placement is different each time you play. Below is an illustration of a typical board setup:
 
-![Random Board Generation](./images/random_board.png)
+![Random Board Generation](./images/random-board.png)
 
 This feature ensures that each game offers a new challenge, keeping the experience fresh and engaging.
 
