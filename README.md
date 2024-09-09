@@ -68,6 +68,35 @@ The screenshot below shows a typical turn, where both the player and the compute
 8. **User Profiles**: Save profiles, stats, and achievements.
 9. **Interactive Elements**: Power-ups and event systems.
 
+### Data Model
+
+**Player**
+- **name**: `String` - The player's name.
+- **score**: `Integer` - The player's score.
+- **board**: `Board` - An instance of the `Board` class representing the player's game board.
+- **ships**: `Set of Tuples` - Coordinates of the player's ships.
+
+**Board Class**
+- **Attributes**:
+  - `size`: `Integer` - Size of the board (e.g., 5 for a 5x5 grid).
+  - `board`: `2D List` - The grid representing the board.
+  - `ships`: `Set of Tuples` - Coordinates of ships placed on the board.
+  - `guesses`: `Set of Tuples` - Coordinates of guesses made.
+- **Methods**:
+  - `place_ships()`: Randomly places ships on the board.
+  - `print_board(hide_ships=False)`: Prints the board, optionally hiding ships.
+  - `make_guess(row, col)`: Processes a guess, marks hits and misses, and returns the result.
+
+**Game**
+- **player**: `Player` - An instance of the `Player` class for the human player.
+- **computer**: `Player` - An instance of the `Player` class for the computer opponent.
+- **rounds**: `Integer` - Number of rounds in the game.
+- **current_round**: `Integer` - The current round number.
+- **winner**: `String` - The winner of the game, if determined.
+
+Two instances of the `Board` class are used: one for the player's board and one for the computer's board.
+
+
 
 
 
