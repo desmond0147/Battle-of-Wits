@@ -1,8 +1,10 @@
 ## Introduction
 
-**ULTIMATE BATTLESHIPS** is a Python terminal game designed to run in the Code Institute mock terminal on Heroku. In this strategic guessing game, you will challenge a computer opponent, racing to find and destroy all of its battleships before it finds yours. Each battleship occupies one square on the 5x5 grid, and the game tests your strategic thinking as you take turns with the computer, guessing the locations of each other's hidden ships. Will you outmaneuver the computer and lead your fleet to victory? 
+**ULTIMATE BATTLESHIPS** is a Python terminal game designed to run in the Code Institute mock terminal on Heroku. In this strategic guessing game, you will challenge a computer opponent, racing to find and destroy all of its battleships before it finds yours. Each battleship occupies a single square on the 5x5 grid, and the game tests your strategic thinking as you take turns with the computer, guessing the locations of each other's hidden ships. Will you outmaneuver the computer and lead your fleet to victory?
 
 ## How to Play
+
+![Start Game Description](./images/start-game.png)
 
 1. **Start the Game:**
    - When you start the game, you'll be prompted to enter your name. This helps personalize the experience and keeps track of your performance against the computer.
@@ -28,6 +30,15 @@
 7. **Replay:**
    - After the game ends, you’ll have the option to play again or exit. Follow the on-screen prompts to make your choice.
 
+### Features
+
+#### Random Board Generation
+
+The game automatically generates a 5x5 grid board with battleships randomly placed. Each battleship occupies a single square on the grid, and the placement is different each time you play. Below is an illustration of a typical board setup:
+
+![Random Board Generation](./images/random_board.png)
+
+This feature ensures that each game offers a new challenge, keeping the experience fresh and engaging.
 
 
 
