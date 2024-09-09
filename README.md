@@ -129,6 +129,15 @@ These tests ensured the functionality and robustness of the game across differen
 
 These fixes have improved the overall stability and user experience of the game.
 
+### Remaining Bugs
+
+- **No bugs remaining**: All known issues have been addressed and resolved.
+
+### Validation Testing
+
+- **PEP8 Compliance**: No errors were returned from PEP8online.com, indicating that the code adheres to PEP8 standards.
+
+
 ### Deployment
 
 This project was deployed using Code Institute's mock terminal for Heroku. Follow these steps to deploy the project:
@@ -146,6 +155,23 @@ This project was deployed using Code Institute's mock terminal for Heroku. Follo
 5. **Deploy the App**: Click the **Deploy** button to deploy your project.
 
 These steps will set up and deploy the project on Heroku, making it accessible online.
+
+### Credits
+
+- **Code Institute**: For providing the deployment terminal used for this project.
+- **Wikipedia**: For details and background information on the Ultimate Battleships game.
+- **Love Sandwiches Walkthrough Project**: For serving as a foundational example for this project.
+- **Hints from the Portfolio Project 3 Scope Video**: For valuable insights and guidance.
+- **Mentor Calls**: For feedback and support throughout the development process.
+- **AI and Google Search**: For additional help and resources during development.
+- **DelftStack**: For the code snippet used to clear the console:
+  ```python
+  import os
+  def clearConsole():
+      """
+      Clears the console output.
+      """
+      os.system('cls' if os.name == 'nt' else 'clear')
 
 
 
