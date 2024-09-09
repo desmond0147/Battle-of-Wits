@@ -40,6 +40,14 @@ The game automatically generates a 5x5 grid board with battleships randomly plac
 
 This feature ensures that each game offers a new challenge, keeping the experience fresh and engaging.
 
+### Player and Computer Engagement
+
+**Engaging with the Computer:**  
+In Ultimate Battleships, both you and the computer take turns guessing the location of each other's ships. The computer's moves are unpredictable, adding an element of surprise and challenge to every game. Your strategic thinking and careful guessing are crucial as you try to outsmart the computer and sink its fleet before it sinks yours.
+
+![Screenshot of game after entering user name](./images/screenshot_after_username.png)
+
+
 
 
                                                                                                                                                                                               
