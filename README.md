@@ -96,6 +96,25 @@ The screenshot below shows a typical turn, where both the player and the compute
 
 Two instances of the `Board` class are used: one for the player's board and one for the computer's board.
 
+### Testing
+
+The project has been manually tested through the following methods:
+
+1. **PEP8 Linting**: The code was passed through a PEP8 linter, and issues such as long line errors were addressed and fixed.
+
+2. **Input Validation**: Various invalid inputs were tested, including:
+   - Empty entries
+   - Strings where numbers are expected
+   - Out-of-bounds inputs
+   - Repeated integers
+
+3. **Terminal Testing**: The game was tested in both:
+   - The local terminal
+   - The Code Institute Heroku terminal
+
+These tests ensured the functionality and robustness of the game across different environments and input scenarios.
+
+
 
 
 
