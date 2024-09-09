@@ -129,6 +129,24 @@ These tests ensured the functionality and robustness of the game across differen
 
 These fixes have improved the overall stability and user experience of the game.
 
+### Deployment
+
+This project was deployed using Code Institute's mock terminal for Heroku. Follow these steps to deploy the project:
+
+1. **Fork or Clone the Repository**: Create a copy of this repository by either forking it on GitHub or cloning it to your local machine.
+
+2. **Create a New Heroku App**: Log in to your Heroku account and create a new app.
+
+3. **Set Buildpacks**: Configure the buildpacks for the Heroku app:
+   - Set the first buildpack to **Python**.
+   - Set the second buildpack to **NodeJS**.
+
+4. **Link the Heroku App to the Repository**: Connect your Heroku app to the GitHub repository.
+
+5. **Deploy the App**: Click the **Deploy** button to deploy your project.
+
+These steps will set up and deploy the project on Heroku, making it accessible online.
+
 
 
 
