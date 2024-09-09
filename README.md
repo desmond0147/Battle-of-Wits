@@ -114,6 +114,20 @@ The project has been manually tested through the following methods:
 
 These tests ensured the functionality and robustness of the game across different environments and input scenarios.
 
+### Bugs
+
+#### Solved Bugs
+
+1. **PEP8 Issues**: Fixed various PEP8 linter issues, including long line errors and code formatting problems.
+
+2. **Input Validation Errors**: Addressed bugs related to invalid inputs, such as:
+   - Handling empty entries.
+   - Managing cases where strings were provided instead of numbers.
+   - Correctly dealing with out-of-bounds and repeated integer inputs.
+
+3. **Terminal Compatibility**: Resolved issues encountered in different terminal environments, ensuring consistent behavior in both the local terminal and the Code Institute Heroku terminal.
+
+These fixes have improved the overall stability and user experience of the game.
 
 
 
