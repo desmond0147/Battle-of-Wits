@@ -55,6 +55,20 @@ The screenshot below shows a typical turn, where both the player and the compute
 
 ![Gameplay Screenshot](./images/game-interaction.png)
 
+### Future Features
+
+
+1. **Multiplayer Mode**: Local and online play options.
+2. **Customizable Settings**: Adjustable grid size, number of ships, and ship types.
+3. **Improved UI**: Color coding, sound effects, and visual enhancements.
+4. **Game Statistics**: Leaderboards and match history.
+5. **Tutorial Mode**: Interactive guide for new players.
+6. **Game Modes**: Campaign and survival modes.
+7. **Ship Placement**: Random and manual placement with rotation options.
+8. **User Profiles**: Save profiles, stats, and achievements.
+9. **Interactive Elements**: Power-ups and event systems.
+
+
 
 
 
