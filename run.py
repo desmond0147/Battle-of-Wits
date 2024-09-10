@@ -5,12 +5,24 @@ import os
 def clearConsole():
     """
     Clears the console output.
+    
+    This function clears the terminal screen to improve the user experience
+    by removing previous outputs and presenting a clean interface.
     """
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear') # copy from https://www.delftstack.com/howto/python/python-clear-console/#google_vignette
 
 
 class Board:
     def __init__(self, size, num_ships, player_name, is_computer=False):
+        """
+        Initializes the board for the player or computer.
+
+        Args:
+            size (int): The size of the board (NxN grid).
+            num_ships (int): The number of ships to be placed on the board.
+            player_name (str): The name of the player.
+            is_computer (bool): A flag to indicate if the board belongs to the computer.
+        """
         self.size = size
         self.num_ships = num_ships
         self.player_name = player_name
@@ -20,6 +32,13 @@ class Board:
         self.guesses = set()  # Track guesses to prevent repetition
 
     def place_ships(self):
+        """
+        Randomly places ships on the board.
+        
+        Ships are placed at random positions on the board. If the board belongs
+        to the player, the ships are displayed. If it belongs to the computer,
+        the ships are hidden.
+        """
         while len(self.ships) < self.num_ships:
             row, col = randint(0, self.size - 1), randint(0, self.size - 1)
             if (row, col) not in self.ships:
@@ -28,6 +47,12 @@ class Board:
                     self.board[row][col] = 'S'
 
     def print_board(self, hide_ships=False):
+        """
+        Prints the current state of the board.
+
+        Args:
+            hide_ships (bool): If True, hides the ships from the display (used for computer's board).
+        """
         print(f"{self.player_name}'s Board:")
         for row in range(self.size):
             print(' '.join(
@@ -37,10 +62,19 @@ class Board:
             ))
 
     def make_guess(self, row, col):
-        if (row, col) in self.guesses:
-            raise ValueError(
-                "You've already guessed that. Try a different number."
-            )
+        """
+        Processes a guess on the board.
+
+        Args:
+            row (int): The row number of the guess.
+            col (int): The column number of the guess.
+
+        Returns:
+            bool: True if the guess hits a ship, False otherwise.
+
+        Raises:
+            ValueError: If the guess has already been made.
+        """
         self.guesses.add((row, col))
         if (row, col) in self.ships:
             self.board[row][col] = 'H'
@@ -51,6 +85,19 @@ class Board:
 
 
 def get_valid_guess(prompt, board):
+    """
+    Prompts the player for a valid guess.
+
+    Args:
+        prompt (str): The message to prompt the user.
+        board (Board): The current player's board.
+
+    Returns:
+        int: A valid guess for the row or column.
+
+    Raises:
+        ValueError: If the input is invalid (e.g., out of range or not a digit).
+    """
     while True:
         try:
             guess = input(prompt).strip()
@@ -63,16 +110,18 @@ def get_valid_guess(prompt, board):
                 raise ValueError(
                     "Input out of range. Enter numbers between 0 and 4."
                 )
-            if guess in board.guesses:
-                raise ValueError(
-                    "You've already guessed that. Try a different number."
-                )
             return guess
         except ValueError as e:
             print(f"Invalid input: {e}. Try again.")
 
 
 def get_valid_name():
+    """
+    Prompts the player for a valid name.
+
+    Returns:
+        str: A valid player name (more than one character and alphabetic).
+    """
     while True:
         player_name = input("Please enter your name:\n").strip()
         if len(player_name) > 1 and player_name.isalpha():
@@ -81,6 +130,12 @@ def get_valid_name():
 
 
 def display_instructions():
+    """
+    Displays the game instructions.
+
+    Provides an overview of how to play ULTIMATE BATTLESHIPS, including the
+    objective, game mechanics, and how to input guesses.
+    """
     print("\nWelcome to ULTIMATE BATTLESHIPS!!")
     print("How to Play:")
     print("1. The game is played on a 5x5 grid.")
@@ -100,8 +155,12 @@ def display_instructions():
 
 def main_game():
     """
-    Begins the main game, prompts the player and computer to take
-    turns, making guesses, and then prints the result at the end of game.
+    Begins the main game loop.
+
+    This function initializes the game, sets up the boards, and handles
+    the rounds where the player and computer take turns guessing. At the end
+    of the game, the scores are displayed, and the player is asked if they
+    want to play again.
     """
     display_instructions()
     player_name = get_valid_name()
@@ -132,37 +191,31 @@ def main_game():
             player_board
         )
 
-        try:
-            clearConsole()
-            if computer_board.make_guess(guess_row, guess_col):
-                print("You hit a ship!")
-                scores["player"] += 1
-            else:
-                print(f"You missed at ({guess_row}, {guess_col}).")
-        except ValueError as e:
-            print(e)
+        clearConsole()
+        if computer_board.make_guess(guess_row, guess_col):
+            print("You hit a ship!")
+            scores["player"] += 1
+        else:
+            print(f"You missed at ({guess_row}, {guess_col}).")
 
         # Computer's guess
         while True:
-            try:
-                comp_guess_row = randint(0, 4)
-                comp_guess_col = randint(0, 4)
-                if not player_board.make_guess(
-                    comp_guess_row, comp_guess_col
-                ):
-                    print(
-                        f"Computer missed at ({comp_guess_row}, "
-                        f"{comp_guess_col})."
-                    )
-                else:
-                    print(
-                        f"Computer hit a ship at ({comp_guess_row}, "
-                        f"{comp_guess_col})!"
-                    )
-                    scores["computer"] += 1
-                break
-            except ValueError:
-                continue
+            comp_guess_row = randint(0, 4)
+            comp_guess_col = randint(0, 4)
+            if not player_board.make_guess(
+                comp_guess_row, comp_guess_col
+            ):
+                print(
+                    f"Computer missed at ({comp_guess_row}, "
+                    f"{comp_guess_col})."
+                )
+            else:
+                print(
+                    f"Computer hit a ship at ({comp_guess_row}, "
+                    f"{comp_guess_col})!"
+                )
+                scores["computer"] += 1
+            break
 
     print("\nFinal Scores:")
     print(f"{player_name}: {scores['player']}")
@@ -180,6 +233,11 @@ def main_game():
 
 
 def play_again():
+    """
+    Asks the player if they want to play again.
+
+    Based on the player's input, the game will either restart or exit.
+    """
     while True:
         choice = input(
             "Would you like to play again? (yes/no):\n"
@@ -197,4 +255,5 @@ def play_again():
 
 if __name__ == "__main__":
     main_game()
+
 
