@@ -5,23 +5,22 @@ import os
 def clearConsole():
     """
     Clears the console output.
-    
     This function clears the terminal screen to improve the user experience
     by removing previous outputs and presenting a clean interface.
     """
-    os.system('cls' if os.name == 'nt' else 'clear') # copy from https://www.delftstack.com/howto/python/python-clear-console/#google_vignette
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 class Board:
     def __init__(self, size, num_ships, player_name, is_computer=False):
         """
         Initializes the board for the player or computer.
-
         Args:
             size (int): The size of the board (NxN grid).
             num_ships (int): The number of ships to be placed on the board.
             player_name (str): The name of the player.
-            is_computer (bool): A flag to indicate if the board belongs to the computer.
+            is computer(bool): A flag to indicate if
+            the board belongs to the computer.
         """
         self.size = size
         self.num_ships = num_ships
@@ -34,7 +33,6 @@ class Board:
     def place_ships(self):
         """
         Randomly places ships on the board.
-        
         Ships are placed at random positions on the board. If the board belongs
         to the player, the ships are displayed. If it belongs to the computer,
         the ships are hidden.
@@ -51,7 +49,8 @@ class Board:
         Prints the current state of the board.
 
         Args:
-            hide_ships (bool): If True, hides the ships from the display (used for computer's board).
+            hide_ships (bool): If True, hides the ships from the display
+            (used for computer's board).
         """
         print(f"{self.player_name}'s Board:")
         for row in range(self.size):
@@ -96,7 +95,8 @@ def get_valid_guess(prompt, board):
         int: A valid guess for the row or column.
 
     Raises:
-        ValueError: If the input is invalid (e.g., out of range or not a digit).
+        Valueerror: If the input is invalid,
+        (e.g., out of range or not a digit).
     """
     while True:
         try:
@@ -142,8 +142,7 @@ def display_instructions():
     print("2. You and the computer will each have 3 ships hidden on the grid.")
     print("3. Each round, you will guess a row and a column to try and hit "
           "the computer's ships.")
-    print("4. The computer will also guess to try and hit your ships."
-          )
+    print("4. The computer will also guess to try and hit your ships.")
     print("5. The game lasts for 6 rounds. The player with the most hits wins!"
           )
     print("6. A 'H' marks a hit, 'O' marks a miss, and 'S' shows your ships "
@@ -202,18 +201,12 @@ def main_game():
         while True:
             comp_guess_row = randint(0, 4)
             comp_guess_col = randint(0, 4)
-            if not player_board.make_guess(
-                comp_guess_row, comp_guess_col
-            ):
-                print(
-                    f"Computer missed at ({comp_guess_row}, "
-                    f"{comp_guess_col})."
-                )
+            if not player_board.make_guess(comp_guess_row, comp_guess_col):
+                print(f"Computer missed at ({comp_guess_row}, "
+                      f"{comp_guess_col}).")
             else:
-                print(
-                    f"Computer hit a ship at ({comp_guess_row}, "
-                    f"{comp_guess_col})!"
-                )
+                print(f"Computer hit a ship at ({comp_guess_row}, "
+                      f"{comp_guess_col})!")
                 scores["computer"] += 1
             break
 
@@ -239,9 +232,7 @@ def play_again():
     Based on the player's input, the game will either restart or exit.
     """
     while True:
-        choice = input(
-            "Would you like to play again? (yes/no):\n"
-        ).strip().lower()
+        choice = input("Would you like to play again? (yes/no):\n").strip().lower()
         if choice == 'yes':
             clearConsole()
             main_game()
@@ -255,5 +246,3 @@ def play_again():
 
 if __name__ == "__main__":
     main_game()
-
-

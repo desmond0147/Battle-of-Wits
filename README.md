@@ -71,30 +71,45 @@ The screenshot below shows a typical turn, where both the player and the compute
 ### Data Model
 
 **Player**
-- **name**: `String` - The player's name.
-- **score**: `Integer` - The player's score.
-- **board**: `Board` - An instance of the `Board` class representing the player's game board.
-- **ships**: `Set of Tuples` - Coordinates of the player's ships.
+- **name**: `String` - The name of the player, used to identify them during the game.
+- **score**: `Integer` - The player's score, representing the number of successful hits on the opponent's ships.
+- **board**: `Board` - The `Board` object that represents the grid where the player's ships are placed and where they make guesses.
+- **ships**: `Set of Tuples` - A set containing the coordinates of the player's ships on the board. Each tuple represents the row and column of a ship.
 
-**Board Class**
-- **Attributes**:
-  - `size`: `Integer` - Size of the board (e.g., 5 for a 5x5 grid).
-  - `board`: `2D List` - The grid representing the board.
-  - `ships`: `Set of Tuples` - Coordinates of ships placed on the board.
-  - `guesses`: `Set of Tuples` - Coordinates of guesses made.
-- **Methods**:
-  - `place_ships()`: Randomly places ships on the board.
-  - `print_board(hide_ships=False)`: Prints the board, optionally hiding ships.
-  - `make_guess(row, col)`: Processes a guess, marks hits and misses, and returns the result.
+**Board**
+- **size**: `Integer` - The size of the board (e.g., 5 for a 5x5 grid).
+- **num_ships**: `Integer` - The number of ships to be placed on the board.
+- **player_name**: `String` - The name of the player who owns this board.
+- **is_computer**: `Boolean` - Indicates whether this board belongs to the computer opponent.
+- **board**: `List of Lists` - A 2D list representing the board grid, where each cell can contain a ship ('S'), a hit ('H'), a miss ('O'), or be empty ('~').
+- **ships**: `Set of Tuples` - A set of coordinates where ships are placed on the board.
+- **guesses**: `Set of Tuples` - A set of coordinates where guesses have been made to prevent repeated guesses.
 
-**Game**
-- **player**: `Player` - An instance of the `Player` class for the human player.
-- **computer**: `Player` - An instance of the `Player` class for the computer opponent.
-- **rounds**: `Integer` - Number of rounds in the game.
-- **current_round**: `Integer` - The current round number.
-- **winner**: `String` - The winner of the game, if determined.
+### Function Attributes
 
-Two instances of the `Board` class are used: one for the player's board and one for the computer's board.
+**place_ships**
+- Places the ships randomly on the board. For the player's board, ships are visible. For the computer's board, ships are hidden.
+
+**print_board**
+- Displays the current state of the board. For the computer's board, ships are hidden during gameplay, but the player can see their own ships.
+
+**make_guess**
+- Takes a row and column as input, checks if the guess has already been made, and updates the board based on whether the guess was a hit or a miss.
+
+**get_valid_guess**
+- Prompts the player to enter a valid guess (row and column) and ensures the input is within the board's boundaries and not a repeated guess.
+
+**get_valid_name**
+- Prompts the player to enter a valid name, ensuring it is not empty or a single character and consists of alphabetical characters only.
+
+**display_instructions**
+- Prints out the game instructions and rules to guide the player on how to play the game.
+
+**main_game**
+- Manages the overall game flow, including setting up the boards, managing rounds, processing guesses, and determining the final winner.
+
+**play_again**
+- Asks the player if they want to play another round after the game ends and handles restarting the game or exiting.
 
 ### Testing
 
@@ -102,13 +117,12 @@ The project has been manually tested through the following methods:
 
 1. **PEP8 Linting**: The code was passed through a PEP8 linter, and issues such as long line errors were addressed and fixed.
 
-2. **Input Validation**: Various invalid inputs were tested, including:
+2. **Input Validation**: Various invalid inputs were tested, and the following were successfully handled:
    - Empty entries
    - Strings where numbers are expected
    - Out-of-bounds inputs
-   - Repeated integers
 
-3. **Terminal Testing**: The game was tested in both:
+3. **Terminal Testing**: The game was successfully tested in both:
    - The local terminal
    - The Code Institute Heroku terminal
 
@@ -159,12 +173,12 @@ These steps will set up and deploy the project on Heroku, making it accessible o
 ### Credits
 
 - **Code Institute**: For providing the deployment terminal used for this project.
-- **Wikipedia**: For details and background information on the Ultimate Battleships game.
+- **Wikipedia**:https://en.wikipedia.org/wiki/Battleship_(game) For details and background information on the Ultimate Battleships game.
 - **Love Sandwiches Walkthrough Project**: For serving as a foundational example for this project.
 - **Hints from the Portfolio Project 3 Scope Video**: For valuable insights and guidance.
 - **Mentor Calls**: For feedback and support throughout the development process.
-- **AI and Google Search**: For additional help and resources during development.
-- **DelftStack**: For the code snippet used to clear the console:
+- **Google Search**: For additional help and resources during development. https://www.w3schools.com/PYTHON/python_dictionaries.asp
+- **DelftStack**: For the code snippet used to clear the console: copy https://www.delftstack.com/howto/python/python-clear-console/#google_vignette
   ```python
   import os
   def clearConsole():
