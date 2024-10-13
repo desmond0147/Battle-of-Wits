@@ -2,26 +2,14 @@ from random import randint
 import os
 
 
-def clear_console():
-    """
-    Clears the console output.
-    This function clears the terminal screen to improve the user experience
-    by removing previous outputs and presenting a clean interface.
-    """
+def clearConsole():
+    """Clears the console output."""
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
 class Board:
     def __init__(self, size, num_ships, player_name, is_computer=False):
-        """
-        Initializes the board for the player or computer.
-
-        Args:
-            size (int): The size of the board (NxN grid).
-            num_ships (int): The number of ships to be placed on the board.
-            player_name (str): The name of the player.
-            is_computer (bool): A flag to indicate if the board belongs to the computer.
-        """
+        """Initializes the board for the player or computer."""
         self.size = size
         self.num_ships = num_ships
         self.player_name = player_name
@@ -31,146 +19,76 @@ class Board:
         self.guesses = set()  # Track guesses to prevent repetition
 
     def place_ships(self):
-        """
-        Randomly places ships on the board.
-
-        Ships are placed at random positions on the board. If the board belongs
-        to the player, the ships are displayed. If it belongs to the computer,
-        the ships are hidden.
-        """
+        """Randomly places ships on the board without excessive checks."""
         while len(self.ships) < self.num_ships:
-            row = randint(0, self.size - 1)
-            col = randint(0, self.size - 1)
-            if (row, col) not in self.ships:
-                self.ships.add((row, col))
-                if not self.is_computer:  # Show ships only on player's board
-                    self.board[row][col] = 'S'
+            row, col = randint(0, self.size - 1), randint(0, self.size - 1)
+            self.ships.add((row, col))
+            self.board[row][col] = 'S' if not self.is_computer else '~'
 
     def print_board(self, hide_ships=False):
-        """
-        Prints the current state of the board.
-
-        Args:
-            hide_ships (bool): If True, hides the ships from the display
-                (used for computer's board).
-        """
+        """Prints the current state of the board."""
         print(f"{self.player_name}'s Board:")
-        header = '  ' + ' '.join(str(i) for i in range(self.size))
-        print(header)
-        for idx, row in enumerate(self.board):
-            display_row = []
-            for col in range(self.size):
-                cell = row[col]
-                if hide_ships and cell == 'S':
-                    display_row.append('~')
-                else:
-                    display_row.append(cell)
-            print(f"{idx} " + ' '.join(display_row))
-        print()  # Add an empty line for better readability
+        for row in self.board:
+            print(' '.join('~' if hide_ships and cell == 'S' else cell for cell in row))
 
     def make_guess(self, row, col):
-        """
-        Processes a guess on the board.
-
-        Args:
-            row (int): The row number of the guess.
-            col (int): The column number of the guess.
-
-        Returns:
-            bool: True if the guess hits a ship, False otherwise.
-
-        Raises:
-            ValueError: If the guess has already been made.
-        """
+        """Processes a guess on the board."""
         if (row, col) in self.guesses:
-            raise ValueError("This coordinate has already been guessed.")
-        
+            return False, "Already guessed."
         self.guesses.add((row, col))
         if (row, col) in self.ships:
             self.board[row][col] = 'H'
-            return True
+            return True, "Hit!"
         else:
             self.board[row][col] = 'O'
-            return False
+            return False, "Miss."
 
 
-def get_valid_guess(prompt, board):
-    """
-    Prompts the player for a valid guess.
-
-    Args:
-        prompt (str): The message to prompt the user.
-        board (Board): The current player's board.
-
-    Returns:
-        tuple: A valid guess as (row, column).
-    """
+def get_valid_guess(prompt):
+    """Prompts the player for a valid guess."""
     while True:
         try:
-            guess = input(prompt).strip().split(',')
-            if len(guess) != 2:
-                raise ValueError("Please enter two digits separated by a comma (e.g., 1,3).")
-            row, col = guess
-            if not (row.isdigit() and col.isdigit()):
-                raise ValueError("Both row and column must be digits.")
-            row, col = int(row), int(col)
-            if not (0 <= row < board.size and 0 <= col < board.size):
-                raise ValueError(
-                    f"Coordinates out of range. Enter numbers between 0 and {board.size - 1}."
-                )
-            if (row, col) in board.guesses:
-                raise ValueError("You have already guessed this coordinate. Try a different one.")
-            return row, col
+            guess = input(prompt).strip()
+            if len(guess) != 1 or not guess.isdigit():
+                raise ValueError("Please enter a single digit between 0 and 4.")
+            guess = int(guess)
+            if guess not in range(5):
+                raise ValueError("Input out of range. Enter numbers between 0 and 4.")
+            return guess
         except ValueError as e:
-            print(f"Invalid input: {e}. Please try again.\n")
+            print(f"Invalid input: {e}. Try again.")
 
 
 def get_valid_name():
-    """
-    Prompts the player for a valid name.
-
-    Returns:
-        str: A valid player name (more than one character and alphabetic).
-    """
+    """Prompts the player for a valid name."""
     while True:
         player_name = input("Please enter your name:\n").strip()
-        if len(player_name) > 1 and player_name.replace(" ", "").isalpha():
+        if len(player_name) > 1 and player_name.isalpha():
             return player_name
-        print("Invalid name. Enter a valid name with more than one character and alphabetic characters only.\n")
+        print("Invalid name. Enter a valid name with more than one character.")
 
 
 def display_instructions():
-    """
-    Displays the game instructions.
-
-    Provides an overview of how to play ULTIMATE BATTLESHIPS, including the
-    objective, game mechanics, and how to input guesses.
-    """
-    print("\n=== Welcome to ULTIMATE BATTLESHIPS ===\n")
+    """Displays the game instructions."""
+    print("\nWelcome to ULTIMATE BATTLESHIPS!!")
+    print("Objective: Sink all of the computer's ships before it sinks yours!")
     print("How to Play:")
     print("1. The game is played on a 5x5 grid.")
     print("2. You and the computer will each have 3 ships hidden on the grid.")
-    print("3. Each round, you will guess a row and a column to try and hit the computer's ships.")
+    print("3. Each round, you will guess a row and a column to try and hit "
+          "the computer's ships.")
     print("4. The computer will also guess to try and hit your ships.")
     print("5. The game lasts for 6 rounds. The player with the most hits wins!")
     print("6. A 'H' marks a hit, 'O' marks a miss, and 'S' shows your ships on your board.")
     print("7. When prompted, enter your name and follow the instructions to make your guesses.")
-    print("8. Coordinates should be entered in the format 'row,column' (e.g., 2,3).\n")
     print("Good luck!\n")
 
 
 def main_game():
-    """
-    Begins the main game loop.
-
-    This function initializes the game, sets up the boards, and handles
-    the rounds where the player and computer take turns guessing. At the end
-    of the game, the scores are displayed, and the player is asked if they
-    want to play again.
-    """
+    """Begins the main game loop."""
     display_instructions()
     player_name = get_valid_name()
-    clear_console()
+    clearConsole()
 
     player_board = Board(size=5, num_ships=3, player_name=player_name)
     computer_board = Board(size=5, num_ships=3, player_name="Computer", is_computer=True)
@@ -180,66 +98,69 @@ def main_game():
     # Initialize scores
     scores = {"computer": 0, "player": 0}
 
-    for round_num in range(1, 7):  # 6 rounds
-        print(f"\n--- Round {round_num} ---")
+    for round_num in range(6):  # Adjusted to 6 rounds
+        print(f"\n--- Round {round_num + 1} ---")
         player_board.print_board()
         computer_board.print_board(hide_ships=True)
 
         # Player's guess
-        guess_prompt = "Enter your guess as 'row,column' (e.g., 1,3): "
-        guess_row, guess_col = get_valid_guess(guess_prompt, computer_board)
+        while True:
+            guess_row = get_valid_guess("Enter a row to guess (enter a single digit between 0 and 4): ")
+            guess_col = get_valid_guess("Enter a column to guess (enter a single digit between 0 and 4): ")
 
-        try:
-            if computer_board.make_guess(guess_row, guess_col):
-                print(f"Hit! You hit a ship at ({guess_row}, {guess_col}).")
-                scores["player"] += 1
-            else:
-                print(f"Missed at ({guess_row}, {guess_col}).")
-        except ValueError as e:
-            print(e)
+            clearConsole()
+            hit, message = computer_board.make_guess(guess_row, guess_col)
+            print(message)
+
+            # Only break the loop if the guess is valid
+            if message != "Already guessed.":
+                if hit:
+                    scores["player"] += 1
+                break  # Exit the loop if the guess is valid
 
         # Computer's guess
         while True:
-            comp_guess_row = randint(0, 4)
-            comp_guess_col = randint(0, 4)
-            if (comp_guess_row, comp_guess_col) not in player_board.guesses:
-                try:
-                    if player_board.make_guess(comp_guess_row, comp_guess_col):
-                        print(f"Computer hit your ship at ({comp_guess_row}, {comp_guess_col})!")
-                        scores["computer"] += 1
-                    else:
-                        print(f"Computer missed at ({comp_guess_row}, {comp_guess_col}).")
-                except ValueError:
-                    # This should not happen as we check for repeated guesses
-                    pass
-                break  # Exit the loop after a successful guess
+            comp_guess_row, comp_guess_col = randint(0, 4), randint(0, 4)
+            if (comp_guess_row, comp_guess_col) not in computer_board.guesses:
+                hit, message = player_board.make_guess(comp_guess_row, comp_guess_col)
+                print(f"Computer's guess at ({comp_guess_row}, {comp_guess_col}): {message}")
+                if hit:
+                    scores["computer"] += 1
+                break  # Exit the loop after a valid guess
 
-        clear_console()
-
-    # Final Scores
-    print("\n=== Final Scores ===")
+    print("\nFinal Scores:")
     print(f"{player_name}: {scores['player']}")
-    print(f"Computer: {scores['computer']}\n")
+    print(f"Computer: {scores['computer']}")
 
-    # Determine Winner
     if scores["player"] > scores["computer"]:
-        print(f"Congratulations, {player_name}! You win!")
-    elif scores["player"] < scores["computer"]:
-        print("The computer wins! Better luck next time.")
+        print(f"{player_name} wins!")
+    elif scores["computer"] > scores["player"]:
+        print("Computer wins!")
     else:
         print("It's a tie!")
 
-    # Ask to play again
+    print("\nGame Over! Thanks for playing.")
+    play_again()
+
+
+def play_again():
+    """Asks the player if they want to play again."""
     while True:
-        play_again = input("\nWould you like to play again? (yes/no): ").strip().lower()
-        if play_again in ('yes', 'no'):
+        choice = input("Would you like to play again? (yes/no):\n").strip().lower()
+        if choice == 'yes':
+            clearConsole()
+            main_game()
             break
-        print("Invalid input. Please enter 'yes' or 'no'.")
-    
-    if play_again == 'yes':
-        clear_console()
-        main_game()
+        elif choice == 'no':
+            print("Thanks for playing! Goodbye!")
+            break
+        else:
+            print("Invalid input. Please enter 'yes' or 'no'.")
 
 
 if __name__ == "__main__":
     main_game()
+
+
+
+
