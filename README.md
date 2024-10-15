@@ -116,6 +116,7 @@ The screenshot below shows a typical turn, where both the player and the compute
 The project has been manually tested through the following methods:
 
 1. **PEP8 Linting**: The code was passed through a PEP8 linter, and issues such as long line errors were addressed and fixed.
+![PEP8 TESTING](./images/pep8_test.png)
 
 2. **Input Validation**: Various invalid inputs were tested, and the following were successfully handled:
    - Empty entries
