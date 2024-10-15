@@ -29,7 +29,9 @@ class Board:
         """Prints the current state of the board."""
         print(f"{self.player_name}'s Board:")
         for row in self.board:
-            print(' '.join('~' if hide_ships and cell == 'S' else cell for cell in row))
+            print(' '.join(
+                '~' if hide_ships and cell == 'S' else cell for cell in row
+            ))
 
     def make_guess(self, row, col):
         """Processes a guess on the board."""
@@ -50,10 +52,14 @@ def get_valid_guess(prompt):
         try:
             guess = input(prompt).strip()
             if len(guess) != 1 or not guess.isdigit():
-                raise ValueError("Please enter a single digit between 0 and 4.")
+                raise ValueError(
+                    "Please enter a single digit between 0 and 4."
+                )
             guess = int(guess)
             if guess not in range(5):
-                raise ValueError("Input out of range. Enter numbers between 0 and 4.")
+                raise ValueError(
+                    "Input out of range. Enter numbers between 0 and 4."
+                )
             return guess
         except ValueError as e:
             print(f"Invalid input: {e}. Try again.")
@@ -75,12 +81,23 @@ def display_instructions():
     print("How to Play:")
     print("1. The game is played on a 5x5 grid.")
     print("2. You and the computer will each have 3 ships hidden on the grid.")
-    print("3. Each round, you will guess a row and a column to try and hit "
-          "the computer's ships.")
+    print(
+        "3. Each round, you will guess a row and a column to try and hit "
+        "the computer's ships."
+    )
     print("4. The computer will also guess to try and hit your ships.")
-    print("5. The game lasts for 6 rounds. The player with the most hits wins!")
-    print("6. A 'H' marks a hit, 'O' marks a miss, and 'S' shows your ships on your board.")
-    print("7. When prompted, enter your name and follow the instructions to make your guesses.")
+    print(
+        "5. The game lasts for 6 rounds. "
+        "The player with the most hits wins!"
+    )
+    print(
+        "6. A 'H' marks a hit, 'O' marks a miss, and 'S' shows your ships "
+        "on your board."
+    )
+    print(
+        "7. When prompted, enter your name and follow the instructions to "
+        "make your guesses."
+    )
     print("Good luck!\n")
 
 
@@ -91,7 +108,9 @@ def main_game():
     clearConsole()
 
     player_board = Board(size=5, num_ships=3, player_name=player_name)
-    computer_board = Board(size=5, num_ships=3, player_name="Computer", is_computer=True)
+    computer_board = Board(
+        size=5, num_ships=3, player_name="Computer", is_computer=True
+    )
     player_board.place_ships()
     computer_board.place_ships()
 
@@ -105,8 +124,12 @@ def main_game():
 
         # Player's guess
         while True:
-            guess_row = get_valid_guess("Enter a row to guess (enter a single digit between 0 and 4): ")
-            guess_col = get_valid_guess("Enter a column to guess (enter a single digit between 0 and 4): ")
+            guess_row = get_valid_guess(
+                "Enter a row to guess (enter a single digit between 0 and 4): "
+            )
+            guess_col = get_valid_guess(
+             "Enter a column to guess (enter a single digit between 0 and 4): "
+            )
 
             clearConsole()
             hit, message = computer_board.make_guess(guess_row, guess_col)
@@ -122,8 +145,12 @@ def main_game():
         while True:
             comp_guess_row, comp_guess_col = randint(0, 4), randint(0, 4)
             if (comp_guess_row, comp_guess_col) not in computer_board.guesses:
-                hit, message = player_board.make_guess(comp_guess_row, comp_guess_col)
-                print(f"Computer's guess at ({comp_guess_row}, {comp_guess_col}): {message}")
+                hit, message = player_board.make_guess(comp_guess_row,
+                                                       comp_guess_col)
+                print(
+                    f"Computer's guess at ({comp_guess_row}, "
+                    f"{comp_guess_col}): {message}"
+                )
                 if hit:
                     scores["computer"] += 1
                 break  # Exit the loop after a valid guess
@@ -146,7 +173,11 @@ def main_game():
 def play_again():
     """Asks the player if they want to play again."""
     while True:
-        choice = input("Would you like to play again? (yes/no):\n").strip().lower()
+        choice = (
+            input("Would you like to play again? (yes/no):\n")
+            .strip()
+            .lower()
+        )
         if choice == 'yes':
             clearConsole()
             main_game()
@@ -160,7 +191,3 @@ def play_again():
 
 if __name__ == "__main__":
     main_game()
-
-
-
-
